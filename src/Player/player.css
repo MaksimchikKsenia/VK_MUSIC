@@ -54,3 +54,43 @@
 	margin-bottom: 21px;
 	margin-right: 2px;
 }
+
+.eye {
+	display: block;
+	position: relative;
+}
+
+.eye:after {
+	content: '';
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background: linear-gradient(0deg, rgba(28, 28, 29, 0.8) 0%, rgba(35, 36, 37, 0.8) 100%);
+	opacity: 0;
+}
+
+.eye:before {
+	content: '';
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background: url("./graph_outline_20.png") no-repeat center;
+	opacity: 0;
+	z-index: 1;
+	transition: opacity 0.4s ease;
+}
+
+.eye:before,
+.eye:after {
+	opacity: 1;
+}
+
+.div_img{
+opacity: 0;
+width: 40px;
+height: 40px;
+}
