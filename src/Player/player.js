@@ -3,7 +3,7 @@ import { Image, Text } from "@vkontakte/vkui";
 import { Icon16MoreVertical } from "@vkontakte/icons";
 import useSound from "use-sound";
 import song from "../Player/anna-asti-po-baram.mp3";
-import mock from './mock.mp3'
+import mock from './new_message-1.mp3'
 import songImage from "./song-image.jpg";
 import { observer } from "mobx-react-lite";
 import { makeAutoObservable } from "mobx";
@@ -38,38 +38,43 @@ class PlayerController {
 const playerController = new PlayerController();
 
 const PlayerComponent = observer(() => {
+  //  const [interval, setInterval] = useState(null)
    const [play, { pause, duration, sound }] = useSound(mock, {
      onend: () => {
-       setCurrTime(duration / 1000);
+      setCurrTime(duration / 1000);
+      playerController.isPlaying = false;
      },
    });
+
   const [currTime, setCurrTime] = useState(null);
   playerController.setPlay(play, pause);
 
     useEffect(() => {
       if (duration) {
+        
         setCurrTime(duration / 1000); 
       }
     }, [duration]);
 
   useEffect(() => {
-    let interval;
-    if (playerController.isPlaying) {
-      interval = setTimeout(function update(){
+    let interval
+    if (playerController.isPlaying && sound) {
+      interval = setInterval(() => {
         if (sound) {
-          setCurrTime(sound.seek()); 
+          setCurrTime(sound.seek());
         }
-        setTimeout(update,1000)
-      }, 1000);
+      }, 1000)
     } else {
-      clearInterval(interval);
+      clearInterval(interval)
+      
     }
-
-    return () => clearInterval(interval);
+    
+    return () => clearInterval(interval); 
   }, [playerController.isPlaying, sound]);
 
   const togglePlay = () => {
     playerController.togglePlay();
+    setCurrTime(sound.seek());
   };
 
   const minutes = Math.floor(currTime / 60);
