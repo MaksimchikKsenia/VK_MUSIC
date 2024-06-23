@@ -1,0 +1,56 @@
+.songWrapper {
+	width: 360px;
+	height: 58px;
+	padding: 0px, 16px, 0px, 16px;
+	display: flex;
+	align-items: center;
+}
+
+
+.playerName {
+	display: block;
+	width: 214px;
+	margin-right: 12px;
+}
+
+.song {
+	font-family: "Roboto", sans-serif;
+	font-size: 16px;
+	font-weight: 400;
+	line-height: 20px;
+	letter-spacing: 0.15000000596046448px;
+	text-align: left;
+	color: rgba(0, 0, 0, 1);
+	margin-bottom: 2px;
+	
+}
+
+.artist {
+	font-family: "Roboto", sans-serif;
+	font-size: 13px;
+	font-weight: 400;
+	line-height: 16px;
+	letter-spacing: 0.20000000298023224px;
+	text-align: left;
+	color: rgba(129, 140, 153, 1);
+}
+
+.time {
+	font-family: "Roboto", sans-serif;
+	font-size: 13px;
+	font-weight: 400;
+	line-height: 16px;
+	letter-spacing: 0.20000000298023224px;
+	text-align: right;
+	color: rgba(129, 140, 153, 1);
+	margin-top: 21px;
+	margin-bottom: 21px;
+}
+
+.icon_more {
+	color: rgba(38, 136, 235, 1);
+	margin-left: 14px;
+	margin-top: 21px;
+	margin-bottom: 21px;
+	margin-right: 2px;
+}
