@@ -6,67 +6,34 @@ import song from "../Player/anna-asti-po-baram.mp3";
 import mock from './new_message-1.mp3'
 import songImage from "./song-image.jpg";
 import { observer } from "mobx-react-lite";
-import { makeAutoObservable } from "mobx";
+import playerController from './playerController';
 import { useState, useEffect } from "react";
 
-class PlayerController {
-  isPlaying = false;
-
-  constructor() {
-    makeAutoObservable(this);
-  }
-
-  getIsPlaying() {
-    return this.isPlaying;
-  }
-
-  setPlay(play, pause) {
-    this.playSound = play;
-    this.pauseSound = pause;
-  }
-
-  togglePlay() {
-    if (this.isPlaying) {
-      this.pauseSound();
-    } else {
-      this.playSound();
-    }
-    this.isPlaying = !this.isPlaying;
-  }
-}
-
-const playerController = new PlayerController();
-
 const PlayerComponent = observer(() => {
-  //  const [interval, setInterval] = useState(null)
-   const [play, { pause, duration, sound }] = useSound(mock, {
-     onend: () => {
-      setCurrTime(duration / 1000);
-      playerController.isPlaying = false;
-     },
-   });
+  const [play, { pause, duration, sound }] = useSound(mock, {
+    onend: () => {
+    playerController.setCurrTime(duration / 1000);
+    playerController.setIsPlaying(false)
+    },
+  });
 
-  const [currTime, setCurrTime] = useState(null);
   playerController.setPlay(play, pause);
 
-    useEffect(() => {
-      if (duration) {
-        
-        setCurrTime(duration / 1000); 
-      }
-    }, [duration]);
+  useEffect(() => {
+    if (duration && duration != null) playerController.setCurrTime(duration / 1000); 
+  }, [duration]);
 
   useEffect(() => {
     let interval
     if (playerController.isPlaying && sound) {
       interval = setInterval(() => {
         if (sound) {
-          setCurrTime(sound.seek());
+          playerController.setCurrTime(sound.seek());
+          console.log(sound.seek())
         }
       }, 1000)
     } else {
       clearInterval(interval)
-      
     }
     
     return () => clearInterval(interval); 
@@ -74,8 +41,10 @@ const PlayerComponent = observer(() => {
 
   const togglePlay = () => {
     playerController.togglePlay();
-    setCurrTime(sound.seek());
+    playerController.setCurrTime(sound.seek());
   };
+
+  const currTime = playerController.currentTime;
 
   const minutes = Math.floor(currTime / 60);
   const seconds = Math.floor(currTime % 60);
